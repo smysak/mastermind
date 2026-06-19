@@ -39,12 +39,12 @@ def pause_ui
   sleep 1
   type_ui('...', 0.5)
   sleep 1
-  $stdout.flush
   puts
+  $stdout.flush
 end
 
 def game_menu
-  $stdin.ioflush
+  pause_ui
   puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
   menu_loop
 end
@@ -64,7 +64,7 @@ def start_1p
   pause_ui
   puts "\nCode generated!\nYou have twelve chances."
   begin_game(code)
-  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
+  game_menu
 end
 
 def input_code
@@ -76,14 +76,14 @@ end
 def start_2p
   puts "\nDecide who shall set the code.\nNo peeking!"
   begin_game(input_code)
-  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
+  game_menu
 end
 
 def start_vs_cpu
   pause_ui
   puts 'so you dare to challenge me.'
   begin_cpu_game(input_code)
-  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
+  game_menu
 end
 
 def begin_cpu_game(code)
@@ -91,6 +91,7 @@ def begin_cpu_game(code)
   puts code.inspect
   sleep 1
   puts 'See? I always win.'
+  sleep 1
 end
 
 def begin_game(code)
