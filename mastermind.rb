@@ -23,6 +23,17 @@ MENU = {
   }
 }.freeze
 
+def pause_ui
+  sleep 1
+  3.times do
+    sleep 0.5
+    print '.'
+  end
+  puts ''
+  sleep 1
+  $stdout.flush
+end
+
 def game_menu
   puts "\n1. One-Player Game\n4. Exit"
   $stdin.ioflush
@@ -40,21 +51,16 @@ end
 
 def start_1p
   code = Code.new
-  puts "\nYou have twelve guesses."
+  puts "\nGenerating code..."
+  pause_ui
+  puts "\nCode generated!\nYou have twelve guesses."
   guess(code)
   puts "\n1. One-Player Game\n4. Exit"
 end
 
 puts "\n"
 puts 'M'.on_red + 'esta'.on_yellow + 'r'.on_red + 'inm'.on_yellow + 'd'.on_red
-sleep 1
-3.times do
-  sleep 0.5
-  print '.'
-  $stdout.flush
-end
-puts ''
-sleep 1
+pause_ui
 puts 'Mastermind'.on_red
 sleep 1
 game_menu
