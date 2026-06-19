@@ -8,10 +8,10 @@ class Code
   attr_reader :first, :second, :third, :fourth
 
   def initialize
-    @first = rand(1..6).to_s
-    @second = rand(1..6).to_s
-    @third = rand(1..6).to_s
-    @fourth = rand(1..6).to_s
+    @first = first || rand(1..6).to_s
+    @second = second || rand(1..6).to_s
+    @third = third || rand(1..6).to_s
+    @fourth = fourth || rand(1..6).to_s
   end
 end
 
