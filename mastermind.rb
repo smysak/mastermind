@@ -23,15 +23,22 @@ MENU = {
   }
 }.freeze
 
+def type_ui(text, speed = 0.3)
+  puts
+  text.each_char do |char|
+    print char
+    $stdout.flush
+    sleep speed
+  end
+  puts
+end
+
 def pause_ui
   sleep 1
-  3.times do
-    sleep 0.5
-    print '.'
-  end
-  puts ''
+  type_ui('...', 0.5)
   sleep 1
   $stdout.flush
+  puts
 end
 
 def game_menu
@@ -58,7 +65,7 @@ def start_1p
   puts "\n1. One-Player Game\n4. Exit"
 end
 
-puts "\n"
+type_ui("\nloading\n")
 puts 'M'.on_red + 'esta'.on_yellow + 'r'.on_red + 'inm'.on_yellow + 'd'.on_red
 pause_ui
 puts 'Mastermind'.on_red
