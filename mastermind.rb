@@ -17,6 +17,7 @@ end
 
 MENU = {
   '1' => -> { start_1p },
+  '2' => -> { start_2p },
   '4' => lambda {
     puts "\nGoodbye."
     exit
@@ -63,6 +64,10 @@ def start_1p
   puts "\nCode generated!\nYou have twelve chances."
   begin_guessing(code)
   puts "\n1. One-Player Game\n4. Exit"
+end
+
+def start_2p
+  puts "\nDecide among yourselves who shall set the code.\nThe rest; no peeking!"
 end
 
 def begin_guessing(code)
