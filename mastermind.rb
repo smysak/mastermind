@@ -62,11 +62,11 @@ def start_1p
   puts "\nGenerating code..."
   pause_ui
   puts "\nCode generated!\nYou have twelve chances."
-  begin_guessing(code)
+  begin_game(code)
   puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
 end
 
-def player_input_code
+def input_code
   pause_ui
   puts "\nInput the code now:"
   Code.new(*collect_player_input.chars)
@@ -74,7 +74,7 @@ end
 
 def start_2p
   puts "\nDecide who shall set the code.\nNo peeking!"
-  begin_guessing(player_input_code)
+  begin_game(input_code)
   puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
 end
 
@@ -85,7 +85,7 @@ def start_vs_cpu
   puts "\nInput the code now:"
 end
 
-def begin_guessing(code)
+def begin_game(code)
   puts "The code consists of four numbers, ranging from 1 to 6\nInput numbers 1-6 only."
   12.times do
     guess = collect_player_input.chars
