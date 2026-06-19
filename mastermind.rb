@@ -104,15 +104,17 @@ end
 def build_feedback(guess, target)
   temp_target = target.dup
   4.times { |i| temp_target[i] = nil if guess [i] == target[i] }
-  4.times.map do |i|
-    if guess[i] == target[i]
-      guess[i].on_red
-    elsif (match_idx = temp_target.index(guess[i]))
-      temp_target[match_idx] = nil
-      guess[i].on_yellow
-    else
-      guess[i]
-    end
+  4.times.map { |i| color_character(guess[i], target[i], temp_target) }
+end
+
+def color_character(char, target_char, temp_target)
+  if char == target_char
+    char.on_red
+  elsif (match_idx = temp_target.index(char))
+    temp_target[match_idx] = nil
+    char.on_yellow
+  else
+    char
   end
 end
 
