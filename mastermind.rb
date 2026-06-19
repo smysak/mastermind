@@ -89,24 +89,31 @@ def collect_player_guess
 end
 
 def evaluate_guess(guess, code)
-  target_sequence = [code.first, code.second, code.third, code.fourth]
-  target_values = target_sequence.uniq
+  target = [code.first, code.second, code.third, code.fourth]
+  display_elements = build_feedback(guess, target)
+  display_elements.each { |element| print element }
+  puts
+  if guess == target
+    (puts "\nYou are a mastermind!"
+     true)
+  else
+    false
+  end
+end
 
-  4.times do |index|
-    if guess[index] == target_sequence[index]
-      print guess[index].to_s.on_red
-    elsif target_values.include?(guess[index])
-      print guess[index].to_s.on_yellow
+def build_feedback(guess, target)
+  temp_target = target.dup
+  4.times { |i| temp_target[i] = nil if guess [i] == target[i] }
+  4.times.map do |i|
+    if guess[i] == target[i]
+      guess[i].on_red
+    elsif (match_idx = temp_target.index(guess[i]))
+      temp_target[match_idx] = nil
+      guess[i].on_yellow
     else
-      print guess[index]
+      guess[i]
     end
   end
-  puts
-  if guess == target_sequence
-    puts "\nYou are a mastermind!"
-    return true
-  end
-  false
 end
 
 type_ui("\nloading\n")
