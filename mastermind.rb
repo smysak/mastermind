@@ -14,5 +14,13 @@ class Code
   end
 end
 
-test_code = Code.new
-p [test_code.first, test_code.second, test_code.third, test_code.fourth]
+puts 'M'.on_red + 'esta'.on_yellow + 'r'.on_red + 'inm'.on_yellow + 'd'.on_red
+sleep 0.5
+3.times do
+  sleep 0.5
+  print '.'
+  $stdout.flush
+end
+puts ''
+sleep 0.5
+puts 'Mastermind'.on_red
