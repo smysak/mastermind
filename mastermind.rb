@@ -16,7 +16,7 @@ class Code
 end
 
 MENU = {
-  '1' => -> { one_player_start },
+  '1' => -> { start_1p },
   '4' => lambda {
     puts "\nGoodbye."
     exit
@@ -36,6 +36,13 @@ def menu_loop
 
     MENU[input].call
   end
+end
+
+def start_1p
+  code = Code.new
+  puts "\nYou have twelve guesses."
+  guess(code)
+  puts "\n1. One-Player Game\n4. Exit"
 end
 
 puts "\n"
