@@ -66,13 +66,23 @@ def start_1p
   puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
 end
 
-def start_2p
-  puts "\nDecide who shall set the code.\nNo peeking!"
+def player_input_code
   pause_ui
   puts "\nInput the code now:"
-  code = Code.new(*collect_player_input.chars)
-  begin_guessing(code)
+  Code.new(*collect_player_input.chars)
+end
+
+def start_2p
+  puts "\nDecide who shall set the code.\nNo peeking!"
+  begin_guessing(player_input_code)
   puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
+end
+
+def start_vs_cpu
+  pause_ui
+  puts 'so you dare to challenge me.'
+  pause_ui
+  puts "\nInput the code now:"
 end
 
 def begin_guessing(code)
