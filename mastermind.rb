@@ -43,7 +43,7 @@ def pause_ui
 end
 
 def game_menu
-  puts "\n1. One-Player Game\n4. Exit"
+  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
   $stdin.ioflush
   menu_loop
 end
@@ -63,11 +63,13 @@ def start_1p
   pause_ui
   puts "\nCode generated!\nYou have twelve chances."
   begin_guessing(code)
-  puts "\n1. One-Player Game\n4. Exit"
+  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
 end
 
 def start_2p
-  puts "\nDecide among yourselves who shall set the code.\nThe rest; no peeking!"
+  puts "\nDecide who shall set the code.\nNo peeking!"
+  pause_ui
+  puts "\nInput the code now:"
 end
 
 def begin_guessing(code)
