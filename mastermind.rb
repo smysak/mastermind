@@ -69,8 +69,9 @@ def begin_guessing(code)
   puts "The code consists of four numbers, ranging from 1 to 6\nInput numbers 1-6 only."
   12.times do
     guess = collect_player_guess.chars
-    break if evaluate_guess(guess, code)
+    return if evaluate_guess(guess, code)
   end
+  puts "\nThe code was #{code.first} #{code.second} #{code.third} #{code.fourth}."
 end
 
 def collect_player_guess
@@ -80,7 +81,7 @@ def collect_player_guess
     input = $stdin.getch
     next unless input.match?(/[1-6]/)
 
-    print input
+    print '*'
     $stdout.flush
     guess << input
   end
@@ -103,7 +104,7 @@ end
 
 def build_feedback(guess, target)
   temp_target = target.dup
-  4.times { |i| temp_target[i] = nil if guess [i] == target[i] }
+  4.times { |i| temp_target[i] = nil if guess[i] == target[i] }
   4.times.map { |i| color_character(guess[i], target[i], temp_target) }
 end
 
