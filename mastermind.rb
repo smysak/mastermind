@@ -18,6 +18,7 @@ end
 MENU = {
   '1' => -> { start_1p },
   '2' => -> { start_2p },
+  '3' => -> { start_vs_cpu },
   '4' => lambda {
     puts "\nGoodbye."
     exit
@@ -44,7 +45,7 @@ end
 
 def game_menu
   $stdin.ioflush
-  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
+  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
   menu_loop
 end
 
@@ -63,7 +64,7 @@ def start_1p
   pause_ui
   puts "\nCode generated!\nYou have twelve chances."
   begin_game(code)
-  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
+  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
 end
 
 def input_code
@@ -75,14 +76,21 @@ end
 def start_2p
   puts "\nDecide who shall set the code.\nNo peeking!"
   begin_game(input_code)
-  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
+  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
 end
 
 def start_vs_cpu
   pause_ui
   puts 'so you dare to challenge me.'
+  begin_cpu_game(input_code)
+  puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
+end
+
+def begin_cpu_game(code)
   pause_ui
-  puts "\nInput the code now:"
+  puts code.inspect
+  sleep 1
+  puts 'See? I always win.'
 end
 
 def begin_game(code)
