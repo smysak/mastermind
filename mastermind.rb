@@ -7,7 +7,7 @@ require 'colorize'
 class Code
   attr_reader :first, :second, :third, :fourth
 
-  def initialize
+  def initialize(first, second, third, fourth)
     @first = first || rand(1..6).to_s
     @second = second || rand(1..6).to_s
     @third = third || rand(1..6).to_s
@@ -58,7 +58,7 @@ def menu_loop
 end
 
 def start_1p
-  code = Code.new
+  code = Code.new(nil, nil, nil, nil)
   puts "\nGenerating code..."
   pause_ui
   puts "\nCode generated!\nYou have twelve chances."
@@ -70,18 +70,21 @@ def start_2p
   puts "\nDecide who shall set the code.\nNo peeking!"
   pause_ui
   puts "\nInput the code now:"
+  code = Code.new(*collect_player_input.chars)
+  begin_guessing(code)
+  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
 end
 
 def begin_guessing(code)
   puts "The code consists of four numbers, ranging from 1 to 6\nInput numbers 1-6 only."
   12.times do
-    guess = collect_player_guess.chars
+    guess = collect_player_input.chars
     return if evaluate_guess(guess, code)
   end
   puts "\nThe code was #{code.first} #{code.second} #{code.third} #{code.fourth}."
 end
 
-def collect_player_guess
+def collect_player_input
   guess = String.new
 
   while guess.length < 4
