@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'io/console'
-require 'colorize'
+require "io/console"
+require "colorize"
 
 # creates a code of four random numbers from 1-6
 class Code
@@ -16,12 +16,12 @@ class Code
 end
 
 MENU = {
-  '1' => -> { start_1p },
-  '2' => -> { start_2p },
-  '4' => lambda {
+  "1" => -> { start_1p },
+  "2" => -> { start_2p },
+  "4" => lambda {
     puts "\nGoodbye."
     exit
-  }
+  },
 }.freeze
 
 def type_ui(text, speed = 0.3)
@@ -36,15 +36,15 @@ end
 
 def pause_ui
   sleep 1
-  type_ui('...', 0.5)
+  type_ui("...", 0.5)
   sleep 1
   $stdout.flush
   puts
 end
 
 def game_menu
-  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
   $stdin.ioflush
+  puts "\n1. One-Player Game\n2. Two-Player Game\n4. Exit"
   menu_loop
 end
 
@@ -91,7 +91,7 @@ def collect_player_input
     input = $stdin.getch
     next unless input.match?(/[1-6]/)
 
-    print '*'
+    print "*"
     $stdout.flush
     guess << input
   end
@@ -106,7 +106,7 @@ def evaluate_guess(guess, code)
   puts
   if guess == target
     (puts "\nYou are a mastermind!"
-     true)
+      true)
   else
     false
   end
@@ -130,8 +130,8 @@ def color_character(char, target_char, temp_target)
 end
 
 type_ui("\nloading\n")
-puts 'M'.on_red + 'esta'.on_yellow + 'r'.on_red + 'inm'.on_yellow + 'd'.on_red
+puts "M".on_red + "esta".on_yellow + "r".on_red + "inm".on_yellow + "d".on_red
 pause_ui
-puts 'Mastermind'.on_red
+puts "Mastermind".on_red
 sleep 1
 game_menu
