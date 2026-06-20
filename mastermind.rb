@@ -130,16 +130,20 @@ def collect_player_input
   guess
 end
 
+def win_message
+  hide_cursor
+  sleep 1
+  puts "\nYou are a mastermind!"
+end
+
 def evaluate_guess(guess, code)
   target = [code.first, code.second, code.third, code.fourth]
   display_elements = build_feedback(guess, target)
   display_elements.each { |element| print element }
   puts
   if guess == target
-    hide_cursor
-    sleep 1
-    (puts "\nYou are a mastermind!"
-     true)
+    win_message
+    true
   else
     false
   end
