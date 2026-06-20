@@ -96,13 +96,21 @@ def start_vs_cpu
   game_menu
 end
 
+CPU_STARTING_GUESSES = %w[1122 3344 5566].freeze
+
 def begin_cpu_game(code)
   hide_cursor
   pause_ui
-  puts code.inspect
-  sleep 1
-  puts 'See? I always win.'
-  sleep 1
+  begin_cpu_guessing(code)
+end
+
+def begin_cpu_guessing(code)
+  3.times do |i|
+    guess = CPU_STARTING_GUESSES[i]
+    evaluate_guess(guess, code)
+    sleep 0.5
+  end
+  pause_ui
 end
 
 def begin_game(code)
