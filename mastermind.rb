@@ -3,6 +3,8 @@
 require 'io/console'
 require 'colorize'
 
+$stdout.sync = true
+
 # creates a code of four random numbers from 1-6
 class Code
   attr_reader :first, :second, :third, :fourth
@@ -29,7 +31,6 @@ def type_ui(text, speed = 0.3)
   puts
   text.each_char do |char|
     print char
-    $stdout.flush
     sleep speed
   end
   puts
@@ -40,11 +41,10 @@ def pause_ui
   type_ui('...', 0.5)
   sleep 1
   puts
-  $stdout.flush
 end
 
 def game_menu
-  pause_ui
+  sleep 1
   puts "\n1. One-Player Game\n2. Two-Player Game\n3. Game Vs CPU\n4. Exit"
   menu_loop
 end
@@ -68,7 +68,7 @@ def start_1p
 end
 
 def input_code
-  pause_ui
+  sleep 0.5
   puts "\nInput the code now:"
   Code.new(*collect_player_input.chars)
 end
@@ -80,7 +80,7 @@ def start_2p
 end
 
 def start_vs_cpu
-  pause_ui
+  sleep 1
   puts 'so you dare to challenge me.'
   begin_cpu_game(input_code)
   game_menu
@@ -111,7 +111,6 @@ def collect_player_input
     next unless input.match?(/[1-6]/)
 
     print '*'
-    $stdout.flush
     guess << input
   end
   puts
@@ -152,5 +151,4 @@ type_ui("\nloading\n")
 puts 'M'.on_red + 'esta'.on_yellow + 'r'.on_red + 'inm'.on_yellow + 'd'.on_red
 pause_ui
 puts 'Mastermind'.on_red
-sleep 1
 game_menu
