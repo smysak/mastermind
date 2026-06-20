@@ -27,6 +27,14 @@ MENU = {
   }
 }.freeze
 
+def hide_cursor
+  print "\e[?25l"
+end
+
+def show_cursor
+  print "\e[?25h"
+end
+
 def type_ui(text, speed = 0.3)
   puts
   text.each_char do |char|
@@ -50,10 +58,12 @@ def game_menu
 end
 
 def menu_loop
+  show_cursor
   loop do
     input = $stdin.getch
     next unless MENU.key?(input)
 
+    hide_cursor
     MENU[input].call
   end
 end
@@ -81,12 +91,13 @@ end
 
 def start_vs_cpu
   sleep 1
-  puts 'so you dare to challenge me.'
+  puts "\nso you dare to challenge me."
   begin_cpu_game(input_code)
   game_menu
 end
 
 def begin_cpu_game(code)
+  hide_cursor
   pause_ui
   puts code.inspect
   sleep 1
@@ -100,10 +111,12 @@ def begin_game(code)
     guess = collect_player_input.chars
     return if evaluate_guess(guess, code)
   end
+  hide_cursor
   puts "\nThe code was #{code.first} #{code.second} #{code.third} #{code.fourth}."
 end
 
 def collect_player_input
+  show_cursor
   guess = String.new
 
   while guess.length < 4
@@ -123,6 +136,8 @@ def evaluate_guess(guess, code)
   display_elements.each { |element| print element }
   puts
   if guess == target
+    hide_cursor
+    sleep 1
     (puts "\nYou are a mastermind!"
      true)
   else
@@ -147,6 +162,7 @@ def color_character(char, target_char, temp_target)
   end
 end
 
+hide_cursor
 type_ui("\nloading\n")
 puts 'M'.on_red + 'esta'.on_yellow + 'r'.on_red + 'inm'.on_yellow + 'd'.on_red
 pause_ui
