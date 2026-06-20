@@ -96,7 +96,7 @@ def start_vs_cpu
   game_menu
 end
 
-CPU_STARTING_GUESSES = %w[1122 3344 5566].freeze
+CPU_THREE_GUESSES = %w[1122 3344 5566].freeze
 
 def begin_cpu_game(code)
   hide_cursor
@@ -106,11 +106,40 @@ end
 
 def begin_cpu_guessing(code)
   3.times do |i|
-    guess = CPU_STARTING_GUESSES[i]
+    guess = CPU_THREE_GUESSES[i]
     evaluate_guess(guess, code)
     sleep 0.5
   end
   pause_ui
+  cpu_algorithm(code)
+end
+
+def cpu_algorithm(code)
+  target = [code.first, code.second, code.third, code.fourth]
+  red_hits = [nil, nil, nil, nil]
+  yellow_hits = [[nil, nil, nil, nil], [nil, nil, nil, nil], [nil, nil, nil, nil]]
+
+  3.times do |three_guesses|
+    guess = CPU_THREE_GUESSES[three_guesses]
+    temp_target = target.dup
+    4.times do |i|
+      if guess[i] == target[i]
+        red_hits[i] = guess[i]
+        temp_target[i] = nil
+      end
+    end
+    4.times do |i|
+      next if guess[i] == target[i]
+
+      match_idx = temp_target.index(guess[i])
+      if match_idx
+        temp_target[match_idx] = nil
+        yellow_hits[three_guesses][i] = guess[i]
+      end
+    end
+  end
+  p red_hits
+  p yellow_hits
 end
 
 def begin_game(code)
@@ -166,11 +195,14 @@ end
 def color_character(char, target_char, temp_target)
   if char == target_char
     char.on_red
-  elsif (match_idx = temp_target.index(char))
-    temp_target[match_idx] = nil
-    char.on_yellow
   else
-    char
+    match_idx = temp_target.index(char)
+    if match_idx
+      temp_target[match_idx] = nil
+      char.on_yellow
+    else
+      char
+    end
   end
 end
 
