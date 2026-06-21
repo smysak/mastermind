@@ -106,12 +106,13 @@ def begin_cpu_game(code)
 end
 
 def begin_cpu_guessing(code)
-  3.times do |i|
-    guess = CPU_THREE_GUESSES[i]
-    return if evaluate_guess(guess.chars, code, is_cpu: true)
+  cracked_early = CPU_THREE_GUESSES.each do |guess|
+    break true if evaluate_guess(guess.chars, code, is_cpu: true)
 
     sleep 0.5
   end
+  return if cracked_early == true
+
   pause_ui
   cpu_algorithm(code)
 end
