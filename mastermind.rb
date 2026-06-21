@@ -153,21 +153,23 @@ def cpu_logic(red_hits, yellow_hits)
 end
 
 def cpu_logic_left(red_hits, yellow_hits)
-  left_values = red_hits[0, 2]
+  left_values = red_hits[0..1]
   return left_values if left_values.compact.length == 2
 
   right_yellows = yellow_hits.map { |turn| turn[2..3] }.flatten.compact
-  left_values = right_yellows.length == 2 ? right_yellows : right_yellows + red_hits[2..3].compact
-  left_values.uniq
+  pool = right_yellows.select { |num| %w[2 4 6].include?(num) }
+  pool *= 2 if pool.length == 1
+  left_values.map! { |slot| slot || pool.shift }
 end
 
 def cpu_logic_right(red_hits, yellow_hits)
-  right_values = red_hits[2, 2]
+  right_values = red_hits[2..3]
   return right_values if right_values.compact.length == 2
 
   left_yellows = yellow_hits.map { |turn| turn[0..1] }.flatten.compact
-  right_values = left_yellows.length == 2 ? left_yellows : left_yellows + red_hits[0..1].compact
-  right_values.uniq
+  pool = left_yellows.select { |num| %w[1 3 5].include?(num) }
+  pool *= 2 if pool.length == 1
+  right_values.map! { |slot| slot || pool.shift }
 end
 
 def begin_game(code)
