@@ -144,10 +144,19 @@ def cpu_algorithm(code)
 end
 
 def cpu_logic(red_hits, yellow_hits, code)
+  left_status = red_hits[0, 2].compact.length == 2 ? :red : :yellow
+  right_status = red_hits[2, 2].compact.length == 2 ? :red : :yellow
   next_left_guess = cpu_logic_left(red_hits, yellow_hits)
   next_right_guess = cpu_logic_right(red_hits, yellow_hits)
-  next_guess = (next_left_guess + next_right_guess).join
-  evaluate_guess(next_guess, code, is_cpu: true)
+  fourth_guess = next_left_guess + next_right_guess
+  return true if evaluate_guess(fourth_guess, code, is_cpu: true)
+
+  sleep 0.5
+  next_left_guess.reverse! if left_status == :yellow
+  next_right_guess.reverse! if right_status == :yellow
+
+  fifth_guess = next_left_guess + next_right_guess
+  evaluate_guess(fifth_guess, code, is_cpu: true)
 end
 
 def cpu_logic_left(red_hits, yellow_hits)
