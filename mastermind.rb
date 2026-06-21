@@ -155,9 +155,14 @@ def cpu_logic_left(red_hits, yellow_hits)
   return left_slots if left_slots.compact.length == 2
 
   right_yellows = yellow_hits.map { |turn| turn[2..3] }.flatten.compact
-  left_slots.map! do |slot|
-    slot || right_yellows.shift || red_hits[2, 2].compact.first
-  end
+  primary_yellow = right_yellows.first
+  opposite_reds = red_hits[2, 2]
+  fallback_num = if opposite_reds.include?(primary_yellow)
+                   primary_yellow
+                 else
+                   opposite_reds.compact.first
+                 end
+  left_slots.map! { |slot| slot || right_yellows.shift || fallback_num }
 end
 
 def cpu_logic_right(red_hits, yellow_hits)
@@ -165,9 +170,14 @@ def cpu_logic_right(red_hits, yellow_hits)
   return right_slots if right_slots.compact.length == 2
 
   left_yellows = yellow_hits.map { |turn| turn[0..1] }.flatten.compact
-  right_slots.map! do |slot|
-    slot || left_yellows.shift || red_hits[0, 2].compact.first
-  end
+  primary_yellow = left_yellows.first
+  opposite_reds = red_hits[0, 2]
+  fallback_num = if opposite_reds.include?(primary_yellow)
+                   primary_yellow
+                 else
+                   opposite_reds.compact.first
+                 end
+  right_slots.map! { |slot| slot || left_yellows.shift || fallback_num }
 end
 
 def begin_game(code)
