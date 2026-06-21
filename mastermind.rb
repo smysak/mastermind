@@ -199,17 +199,13 @@ def build_feedback(guess, target)
 end
 
 def color_character(char, target_char, temp_target)
-  if char == target_char
-    char.on_red
-  else
-    match_idx = temp_target.index(char)
-    if match_idx
-      temp_target[match_idx] = nil
-      char.on_yellow
-    else
-      char
-    end
-  end
+  return char.on_red if char == target_char
+
+  match_idx = temp_target.index(char)
+  return char unless match_idx
+
+  temp_target[match_idx] = nil
+  char.on_yellow
 end
 
 hide_cursor
