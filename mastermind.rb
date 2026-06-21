@@ -158,6 +158,7 @@ def cpu_logic_left(red_hits, yellow_hits)
 
   right_yellows = yellow_hits.map { |turn| turn[2..3] }.flatten.compact
   pool = right_yellows.select { |num| %w[2 4 6].include?(num) }
+  pool = red_hits[2..3].compact if pool.empty?
   pool *= 2 if pool.length == 1
   left_values.map! { |slot| slot || pool.shift }
 end
@@ -168,6 +169,7 @@ def cpu_logic_right(red_hits, yellow_hits)
 
   left_yellows = yellow_hits.map { |turn| turn[0..1] }.flatten.compact
   pool = left_yellows.select { |num| %w[1 3 5].include?(num) }
+  pool = red_hits[0..1].compact if pool.empty?
   pool *= 2 if pool.length == 1
   right_values.map! { |slot| slot || pool.shift }
 end
