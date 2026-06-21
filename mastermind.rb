@@ -145,33 +145,29 @@ end
 
 def cpu_logic(red_hits, yellow_hits)
   next_left_guess = cpu_logic_left(red_hits, yellow_hits)
-  p next_left_guess
   next_right_guess = cpu_logic_right(red_hits, yellow_hits)
-  p next_right_guess
+  next_guess = (next_left_guess + next_right_guess).join
+  p next_guess
 end
 
 def cpu_logic_left(red_hits, yellow_hits)
-  p red_hits
-  left_values = red_hits[0, 2]
-  p left_values
-  return left_values if left_values.compact.length == 2
+  left_slots = red_hits[0, 2]
+  return left_slots if left_slots.compact.length == 2
 
   right_yellows = yellow_hits.map { |turn| turn[2..3] }.flatten.compact
-  left_values = right_yellows.length == 2 ? right_yellows : right_yellows + red_hits[2..3].compact
-  p left_values.uniq
-  left_values.uniq
+  left_slots.map! do |slot|
+    slot || right_yellows.shift || red_hits[2, 2].compact.first
+  end
 end
 
 def cpu_logic_right(red_hits, yellow_hits)
-  p red_hits
-  right_values = red_hits[2, 2]
-  p right_values
-  return right_values if right_values.compact.length == 2
+  right_slots = red_hits[2, 2]
+  return right_slots if right_slots.compact.length == 2
 
   left_yellows = yellow_hits.map { |turn| turn[0..1] }.flatten.compact
-  right_values = left_yellows.length == 2 ? left_yellows : left_yellows + red_hits[0..1].compact
-  p right_values.uniq
-  right_values.uniq
+  right_slots.map! do |slot|
+    slot || left_yellows.shift || red_hits[0, 2].compact.first
+  end
 end
 
 def begin_game(code)
