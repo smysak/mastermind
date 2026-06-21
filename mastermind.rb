@@ -140,14 +140,14 @@ def cpu_algorithm(code)
       end
     end
   end
-  cpu_logic(red_hits, yellow_hits)
+  cpu_logic(red_hits, yellow_hits, code)
 end
 
-def cpu_logic(red_hits, yellow_hits)
+def cpu_logic(red_hits, yellow_hits, code)
   next_left_guess = cpu_logic_left(red_hits, yellow_hits)
   next_right_guess = cpu_logic_right(red_hits, yellow_hits)
   next_guess = (next_left_guess + next_right_guess).join
-  p next_guess
+  evaluate_guess(next_guess, code, is_cpu: true)
 end
 
 def cpu_logic_left(red_hits, yellow_hits)
