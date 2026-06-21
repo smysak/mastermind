@@ -122,8 +122,7 @@ def cpu_algorithm(code)
   red_hits = [nil, nil, nil, nil]
   yellow_hits = [[nil, nil, nil, nil], [nil, nil, nil, nil], [nil, nil, nil, nil]]
 
-  3.times do |three_guesses|
-    guess = CPU_THREE_GUESSES[three_guesses]
+  CPU_THREE_GUESSES.each_with_index do |guess, three_guesses|
     temp_target = target.dup
     4.times do |i|
       if guess[i] == target[i]
