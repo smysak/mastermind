@@ -140,6 +140,10 @@ def cpu_algorithm(code)
       end
     end
   end
+  cpu_logic(red_hits, yellow_hits)
+end
+
+def cpu_logic(red_hits, yellow_hits)
   p red_hits
   p yellow_hits
 end
