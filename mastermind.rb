@@ -91,8 +91,9 @@ end
 
 def start_vs_cpu
   sleep 1
-  puts "\nso you dare to challenge me."
+  puts "\nI'll show you how it's done."
   begin_cpu_game(input_code)
+  puts "\nThere it is!"
   game_menu
 end
 
@@ -107,7 +108,8 @@ end
 def begin_cpu_guessing(code)
   3.times do |i|
     guess = CPU_THREE_GUESSES[i]
-    evaluate_guess(guess, code)
+    return if evaluate_guess(guess.chars, code, is_cpu: true)
+
     sleep 0.5
   end
   pause_ui
@@ -173,13 +175,13 @@ def win_message
   puts "\nYou are a mastermind!"
 end
 
-def evaluate_guess(guess, code)
+def evaluate_guess(guess, code, is_cpu: false)
   target = [code.first, code.second, code.third, code.fourth]
   display_elements = build_feedback(guess, target)
   display_elements.each { |element| print element }
   puts
   if guess == target
-    win_message
+    win_message unless is_cpu
     true
   else
     false
