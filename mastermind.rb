@@ -144,8 +144,6 @@ def cpu_algorithm(code)
 end
 
 def cpu_logic(red_hits, yellow_hits)
-  p red_hits
-  p yellow_hits
   next_left_guess = cpu_logic_left(red_hits, yellow_hits)
   p next_left_guess
   next_right_guess = cpu_logic_right(red_hits, yellow_hits)
@@ -153,25 +151,27 @@ def cpu_logic(red_hits, yellow_hits)
 end
 
 def cpu_logic_left(red_hits, yellow_hits)
-  left_values = red_hits[0..1]
+  p red_hits
+  left_values = red_hits[0, 2]
+  p left_values
   return left_values if left_values.compact.length == 2
 
   right_yellows = yellow_hits.map { |turn| turn[2..3] }.flatten.compact
-  pool = right_yellows.select { |num| %w[2 4 6].include?(num) }
-  pool = red_hits[2..3].compact if pool.empty?
-  pool *= 2 if pool.length == 1
-  left_values.map! { |slot| slot || pool.shift }
+  left_values = right_yellows.length == 2 ? right_yellows : right_yellows + red_hits[2..3].compact
+  p left_values.uniq
+  left_values.uniq
 end
 
 def cpu_logic_right(red_hits, yellow_hits)
-  right_values = red_hits[2..3]
+  p red_hits
+  right_values = red_hits[2, 2]
+  p right_values
   return right_values if right_values.compact.length == 2
 
   left_yellows = yellow_hits.map { |turn| turn[0..1] }.flatten.compact
-  pool = left_yellows.select { |num| %w[1 3 5].include?(num) }
-  pool = red_hits[0..1].compact if pool.empty?
-  pool *= 2 if pool.length == 1
-  right_values.map! { |slot| slot || pool.shift }
+  right_values = left_yellows.length == 2 ? left_yellows : left_yellows + red_hits[0..1].compact
+  p right_values.uniq
+  right_values.uniq
 end
 
 def begin_game(code)
